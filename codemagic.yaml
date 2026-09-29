@@ -11,7 +11,7 @@ workflows:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
     scripts:
-      - name: Install Node dependencies
+      - name: Install dependencies
         script: |
           npm install
           npm install @capacitor/cli @capacitor/core @capacitor/ios
@@ -24,15 +24,8 @@ workflows:
           cd ios/App
           pod install
           cd ../..
-      - name: Build IPA
+      - name: Build for iOS
         script: |
           xcode-project build-ipa --workspace="$XCODE_WORKSPACE" --scheme="$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-    publishing:
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true
-        beta_groups:
-          - Beta Testers
