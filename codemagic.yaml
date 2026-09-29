@@ -7,9 +7,6 @@ workflows:
       node: 20
       xcode: latest
       cocoapods: default
-      vars:
-        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
-        XCODE_SCHEME: "App"
     scripts:
       - name: Install dependencies
         script: |
@@ -23,9 +20,9 @@ workflows:
         script: |
           cd ios/App
           pod install
-          cd ../..
-      - name: Build for iOS
+      - name: Build iOS without signing
         script: |
-          xcode-project build-ipa --workspace="$XCODE_WORKSPACE" --scheme="$XCODE_SCHEME"
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace -scheme App -sdk iphoneos -configuration Release CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -derivedDataPath build
     artifacts:
-      - build/ios/ipa/*.ipa
+      - ios/App/build/Build/Products/Release-iphoneos/*.app
