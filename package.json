@@ -1,0 +1,7 @@
+{
+  "name": "loxy-ai",
+  "dependencies": {
+    "@capacitor/core": "latest",
+    "@capacitor/ios": "latest"
+  }
+}
