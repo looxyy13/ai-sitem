@@ -12,10 +12,13 @@ workflows:
         script: |
           npm install
           npm install @capacitor/cli @capacitor/core @capacitor/ios
-      - name: Add iOS platform
+      - name: Add iOS platform and fix version
         script: |
           npx cap add ios || true
           npx cap copy ios
+          # iOS sürümünü 14.0 yap - bu hatayı çözecek
+          sed -i '' "s/platform :ios.*/platform :ios, '14.0'/" ios/App/Podfile
+          echo "Podfile fixed to iOS 14.0"
       - name: Install Pods
         script: |
           cd ios/App
